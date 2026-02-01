@@ -13,7 +13,15 @@ find_package(Qt6 REQUIRED COMPONENTS
 
 qt_standard_project_setup()
 
-qt_add_executable(adhd main.cpp mainwindow.cpp)
+qt_add_executable(adhd
+  main.cpp
+  mainwindow.cpp
+  mainwindow.h
+  service.cpp
+  service.h
+  mainwindow.ui
+  sessionslistmodel.h sessionslistmodel.cpp
+)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
