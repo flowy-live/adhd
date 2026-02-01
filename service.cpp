@@ -110,7 +110,7 @@ void Service::setVaultDirectory(const QString &path) {
 Session Service::createSession(const QString &oneliner, const QString &content) {
   assert(!m_vaultDirectory.isEmpty() && "Vault directory must be set before creating sessions");
 
-  QString uuid = QUuid().toString(QUuid::WithoutBraces);
+  QString uuid = QUuid::createUuid().toString(QUuid::WithoutBraces);
 
   Session session = {};
   session.id = uuid;
