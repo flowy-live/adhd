@@ -10,8 +10,10 @@ FocusOverlay::FocusOverlay(QWidget *parent)
   ui->setupUi(this);
 
   // Set window flags for always-on-top frameless window
-  setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint | Qt::Tool);
+  // Use Qt::Window instead of Qt::Tool so it stays visible when app loses focus
+  setWindowFlags(Qt::Window | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
   setAttribute(Qt::WA_TranslucentBackground);
+  setAttribute(Qt::WA_ShowWithoutActivating); // Don't steal focus when showing
 
   // Connect buttons
   connect(ui->resetButton, &QPushButton::clicked,
@@ -65,7 +67,7 @@ void FocusOverlay::positionAtBottomCenter()
 
   QRect screenGeometry = screen->geometry();
   int x = (screenGeometry.width() - width()) / 2;
-  int y = screenGeometry.height() - height() - 300; // 300px from bottom
+  int y = screenGeometry.height() - height();
 
   move(x, y);
 }
