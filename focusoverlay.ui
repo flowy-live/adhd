@@ -47,8 +47,8 @@ QPushButton {
     color: white;
     border: 1px solid rgba(120, 120, 120, 255);
     border-radius: 5px;
-    padding: 5px 10px;
-    min-width: 60px;
+    padding: 4px 8px;
+    min-width: 50px;
 }
 
 QPushButton:hover {
@@ -61,19 +61,19 @@ QPushButton:pressed {
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
    <property name="spacing">
-    <number>10</number>
+    <number>8</number>
    </property>
    <property name="leftMargin">
-    <number>15</number>
+    <number>10</number>
    </property>
    <property name="topMargin">
-    <number>15</number>
+    <number>8</number>
    </property>
    <property name="rightMargin">
-    <number>15</number>
+    <number>10</number>
    </property>
    <property name="bottomMargin">
-    <number>15</number>
+    <number>8</number>
    </property>
    <item>
     <widget class="QWidget" name="widget" native="true">
@@ -97,7 +97,7 @@ QPushButton:pressed {
        <widget class="QLabel" name="onelinerLabel">
         <property name="font">
          <font>
-          <pointsize>14</pointsize>
+          <pointsize>12</pointsize>
           <bold>true</bold>
          </font>
         </property>
@@ -113,7 +113,7 @@ QPushButton:pressed {
        <widget class="QLabel" name="elapsedLabel">
         <property name="font">
          <font>
-          <pointsize>12</pointsize>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
