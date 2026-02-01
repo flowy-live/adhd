@@ -1,6 +1,15 @@
 #include <iostream>
+#include <QApplication>
+#include "mainwindow.h"
 
-int main(int argc, char *args[]) {
+int main(int argc, char *argv[]) {
   std::cout << "Starting adhd program" << std::endl;
-  return 0;
+
+  QApplication a(argc, argv);
+  a.setStyle("fusion");
+
+  MainWindow w;
+  w.show();
+
+  return a.exec();
 }

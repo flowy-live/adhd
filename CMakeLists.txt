@@ -13,7 +13,18 @@ find_package(Qt6 REQUIRED COMPONENTS
 
 qt_standard_project_setup()
 
-qt_add_executable(adhd main.cpp)
+qt_add_executable(adhd main.cpp mainwindow.cpp)
+
+# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
+# If you are developing for iOS or macOS you should consider setting an
+# explicit, fixed bundle identifier manually though.
+set_target_properties(adhd PROPERTIES
+        #    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.adhd
+        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        MACOSX_BUNDLE TRUE
+        WIN32_EXECUTABLE $<NOT:$<CONFIG:Debug>>
+)
 
 target_link_libraries(adhd
   PRIVATE
