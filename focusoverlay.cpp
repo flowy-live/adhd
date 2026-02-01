@@ -2,10 +2,12 @@
 #include "ui_focusoverlay.h"
 #include <QScreen>
 #include <QGuiApplication>
+#include <QMouseEvent>
 
 FocusOverlay::FocusOverlay(QWidget *parent)
     : QWidget(parent),
-      ui(new Ui::FocusOverlay)
+      ui(new Ui::FocusOverlay),
+      m_dragging(false)
 {
   ui->setupUi(this);
 
@@ -70,4 +72,29 @@ void FocusOverlay::positionAtBottomCenter()
   int y = screenGeometry.height() - height();
 
   move(x, y);
+}
+
+void FocusOverlay::mousePressEvent(QMouseEvent *event)
+{
+  if (event->button() == Qt::LeftButton) {
+    m_dragging = true;
+    m_dragStartPosition = event->globalPosition().toPoint() - frameGeometry().topLeft();
+    event->accept();
+  }
+}
+
+void FocusOverlay::mouseMoveEvent(QMouseEvent *event)
+{
+  if (m_dragging && (event->buttons() & Qt::LeftButton)) {
+    move(event->globalPosition().toPoint() - m_dragStartPosition);
+    event->accept();
+  }
+}
+
+void FocusOverlay::mouseReleaseEvent(QMouseEvent *event)
+{
+  if (event->button() == Qt::LeftButton) {
+    m_dragging = false;
+    event->accept();
+  }
 }
