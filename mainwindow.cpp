@@ -10,6 +10,7 @@
 #include <QVBoxLayout>
 #include <QTimer>
 #include <QMessageBox>
+#include <QSettings>
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -20,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
   ui = new Ui::MainWindow;
   ui->setupUi(this);
+  setWindowTitle("flowy.adhd");
 
   m_listModel = new SessionsListModel(m_service, this);
   ui->listView->setModel(m_listModel);
@@ -46,6 +48,16 @@ MainWindow::MainWindow(QWidget *parent)
 
   // Set initial state: no active session
   ui->activeStackedWidget->setCurrentIndex(0);
+
+  // Load saved vault directory from settings
+  QSettings settings("flowy", "adhd");
+  QString savedVaultPath = settings.value("vaultDirectory").toString();
+  if (!savedVaultPath.isEmpty() && QDir(savedVaultPath).exists()) {
+    m_service->setVaultDirectory(savedVaultPath);
+    ui->vaultLabel->setText(savedVaultPath);
+    // Switch to Sessions tab if we have a valid vault
+    ui->tabWidget->setCurrentIndex(1);
+  }
 }
 
 MainWindow::~MainWindow() {}
@@ -60,6 +72,10 @@ void MainWindow::on_selectVaultButton_clicked()
     m_service->setVaultDirectory(dir);
     ui->tabWidget->setCurrentIndex(1);
     ui->vaultLabel->setText(dir);
+
+    // Save to settings for next launch
+    QSettings settings("flowy", "adhd");
+    settings.setValue("vaultDirectory", dir);
   }
 }
 
