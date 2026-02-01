@@ -5,6 +5,12 @@ project(adhd VERSION 1.0.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Set minimum macOS version
+# Qt 6.8.6 requires macOS 11.0 (Big Sur) minimum
+if(APPLE)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0" CACHE STRING "Minimum macOS version")
+endif()
+
 find_package(Qt6 REQUIRED COMPONENTS
         Core
         Gui
