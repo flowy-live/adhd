@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FocusOverlay</class>
+ <widget class="QWidget" name="FocusOverlay">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>120</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Focus Session</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget#FocusOverlay {
+    background-color: rgba(50, 50, 50, 200);
+    border-radius: 10px;
+    border: 2px solid rgba(100, 100, 100, 255);
+}
+
+QLabel {
+    color: white;
+}
+
+QPushButton {
+    background-color: rgba(80, 80, 80, 255);
+    color: white;
+    border: 1px solid rgba(120, 120, 120, 255);
+    border-radius: 5px;
+    padding: 5px 10px;
+    min-width: 60px;
+}
+
+QPushButton:hover {
+    background-color: rgba(100, 100, 100, 255);
+}
+
+QPushButton:pressed {
+    background-color: rgba(60, 60, 60, 255);
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>10</number>
+   </property>
+   <property name="leftMargin">
+    <number>15</number>
+   </property>
+   <property name="topMargin">
+    <number>15</number>
+   </property>
+   <property name="rightMargin">
+    <number>15</number>
+   </property>
+   <property name="bottomMargin">
+    <number>15</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="onelinerLabel">
+     <property name="font">
+      <font>
+       <pointsize>14</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Session Oneliner</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="elapsedLabel">
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Elapsed: 00:00:00</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="resetButton">
+       <property name="text">
+        <string>Reset</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="endButton">
+       <property name="text">
+        <string>End Session</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

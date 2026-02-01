@@ -27,8 +27,19 @@ QVariant SessionsListModel::data(const QModelIndex &index, int role) const {
   const Session session = m_service->sessions().at(index.row());
   switch (role) {
     case Qt::DisplayRole:
+      // Simple display for fallback - delegate will handle rich rendering
       return session.oneliner;
+    case Qt::UserRole:
+      // Store full session object for delegate access
+      return QVariant::fromValue(session);
     default:
       return QVariant();
   }
+}
+
+Session SessionsListModel::getSessionByIndex(const QModelIndex &index) const {
+  if (!index.isValid() || index.row() < 0 || index.row() >= rowCount()) {
+    return Session(); // Return default-constructed session
+  }
+  return m_service->sessions().at(index.row());
 }

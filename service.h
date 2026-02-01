@@ -6,6 +6,8 @@
 #include <QDateTime>
 #include <QString>
 #include <QFileInfo>
+#include <QElapsedTimer>
+#include <QTimer>
 #include <optional>
 
 struct Session
@@ -65,18 +67,38 @@ public slots:
 
   void deleteSession(const QString &sessionId);
 
+  // Session lifecycle methods
+  void startSession(const Session &session);
+  void updateActiveSession(const Session &session); // Update without restarting timer
+  int getElapsedMs() const;
+  void resetSessionTimer();
+  void endSession(Session::Result result);
+  std::optional<Session> activeSession() const;
+
 signals:
   void sessionsChanged();
+  void activeSessionChanged();
+  void sessionTimerTicked(int elapsedMs);
 
 private:
   QString m_vaultDirectory;
   QList<Session> m_sessions;
+
+  // Active session tracking
+  std::optional<Session> m_activeSession;
+  QElapsedTimer m_sessionTimer;
+  QTimer *m_tickTimer;
 
   /// @returns null Session if not a valid session markdown document
   std::optional<Session> parseFile(const QFileInfo &fileInfo);
 
   Session::Result parseResult(const QString &resultStr);
   void overwriteSessionFile(const Session &session);
+
+private slots:
+  void onTickTimerFired();
 };
+
+Q_DECLARE_METATYPE(Session)
 
 #endif //SERVICE_H

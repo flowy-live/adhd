@@ -20,7 +20,21 @@ qt_add_executable(adhd
   service.cpp
   service.h
   mainwindow.ui
-  sessionslistmodel.h sessionslistmodel.cpp
+  sessionslistmodel.h
+  sessionslistmodel.cpp
+  sessionitemdelegate.h
+  sessionitemdelegate.cpp
+  createsessiondialog.h
+  createsessiondialog.cpp
+  createsessiondialog.ui
+  focusoverlay.h
+  focusoverlay.cpp
+  focusoverlay.ui
+  endsessiondialog.h
+  endsessiondialog.cpp
+  endsessiondialog.ui
+  namegenerator.h
+  namegenerator.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

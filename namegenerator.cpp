@@ -1,9 +1,5 @@
-#include "namegenerator.cpp"
-
-namespace {
-  constexpr char data[]
-}
+#include "namegenerator.h"
 
 QString generate() {
-  return;
+  return QString("generated-name-placeholder");
 }

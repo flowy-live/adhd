@@ -8,7 +8,12 @@ bool Session::isComplete() const {
   return result != UNSPECIFIED;
 }
 
-Service::Service(QObject *parent) : QObject(parent) {
+Service::Service(QObject *parent)
+    : QObject(parent),
+      m_tickTimer(new QTimer(this))
+{
+  m_tickTimer->setInterval(1000); // Fire every second
+  connect(m_tickTimer, &QTimer::timeout, this, &Service::onTickTimerFired);
 }
 
 Service::~Service() {}
@@ -161,7 +166,7 @@ std::optional<Session> Service::parseFile(const QFileInfo &fileInfo) {
   }
 
   Session session = {};
-  session.id = file.fileName();
+  session.id = fileInfo.baseName(); // Get filename without extension
   session.content = "";
   session.oneliner = "";
   session.durationMs = 0;
@@ -267,4 +272,78 @@ void Service::overwriteSessionFile(const Session &session)
   out << "---\n";
   out << session.content << "\n";
   file.close();
+}
+
+// Session lifecycle methods
+
+void Service::startSession(const Session &session) {
+  if (m_activeSession.has_value()) {
+    qWarning() << "A session is already active. End it before starting a new one.";
+    return;
+  }
+
+  m_activeSession = session;
+  m_sessionTimer.start();
+  m_tickTimer->start();
+
+  emit activeSessionChanged();
+  emit sessionTimerTicked(0);
+}
+
+void Service::updateActiveSession(const Session &session) {
+  if (!m_activeSession.has_value()) {
+    qWarning() << "No active session to update.";
+    return;
+  }
+
+  m_activeSession = session;
+  // Don't emit activeSessionChanged - just update the session data
+  // Timer keeps running
+}
+
+int Service::getElapsedMs() const {
+  if (!m_activeSession) {
+    return 0;
+  }
+  return m_sessionTimer.elapsed();
+}
+
+void Service::resetSessionTimer() {
+  if (!m_activeSession) {
+    return;
+  }
+
+  m_sessionTimer.restart();
+  emit sessionTimerTicked(0);
+}
+
+void Service::endSession(Session::Result result) {
+  if (!m_activeSession) {
+    return;
+  }
+
+  // Update session with final values
+  Session updated = *m_activeSession;
+  updated.durationMs = getElapsedMs();
+  updated.result = result;
+  updated.lastModifiedAt = QDateTime::currentDateTime();
+
+  // Save to file and update in list
+  updateSession(updated);
+
+  // Clear active state
+  m_activeSession.reset();
+  m_tickTimer->stop();
+
+  emit activeSessionChanged();
+}
+
+std::optional<Session> Service::activeSession() const {
+  return m_activeSession;
+}
+
+void Service::onTickTimerFired() {
+  if (m_activeSession) {
+    emit sessionTimerTicked(getElapsedMs());
+  }
 }
