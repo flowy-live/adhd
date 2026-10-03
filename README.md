@@ -1,8 +1,6 @@
 # Flowy.adhd
 
-We live in a noisy digital world. Unless you turn off your WiFi, millions of companies bid for your attention as you try to perform even the simplest of tasks.
-
-For anyone with adhd, doing one thing at a time is the key. NOT using fancy todo managers. Win one intention at a time instead of planning, prioritizing, and juggling 100s of things.
+We live in a noisy digital world. For anyone with adhd, doing one thing at a time is the key. NOT using fancy todo managers. Win one intention at a time instead of planning, prioritizing, and juggling 100s of things.
 
 This tool is a free, open-source application to help you stay on track. You set an intention before you work, and a big, fat overlay stays in your periphery to keep you on track.
 
