@@ -4,11 +4,38 @@ We live in a noisy digital world. Unless you turn off your WiFi, millions of com
 
 This tool is a free, open-source application to help you stay on track. You set an intention before you work, and an overlay will remind you of your intention every x minutes.
 
-![app](demo/app.png)
-![desktop](demo/desktop.png)
+![main window](demo/main_window.png)
+![coding](demo/coding.png)
+![research](demo/research.png)
 
 ## Install
 At the moment, you must build and install the application yourself. There are minimum dependencies, so you essentially just need a C compiler.
+
+### macOS
+```sh
+brew install raylib
+git clone https://git.talksik.com/FlowyLabs/adhd
+cd adhd
+make
+./adhd
+
+# Optional
+sudo make install
+```
+
+### Linux
+```sh
+# Install raylib according to your distro
+
+git clone https://git.talksik.com/FlowyLabs/adhd
+cd adhd
+make
+./adhd
+
+# Optional
+sudo make install
+```
+
 
 ## How it works
 
