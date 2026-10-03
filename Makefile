@@ -1,8 +1,9 @@
 CC = cc
-CFLAGS = -g -Wall -Iinclude
+CFLAGS = -g -Wall -Iinclude -I/opt/homebrew/include
 SOURCES = src/main.c src/window_state.c
 OBJECTS = src/main.o src/window_state.o
-LDFLAGS = -lraylib -lm -lsqlite3
+LDFLAGS = -L/opt/homebrew/lib
+LDLIBS = -lraylib -lm -lsqlite3
 HEADERS = \
 	include/raygui.h include/common.h include/window_state.h
 
@@ -16,7 +17,7 @@ BINDIR := $(PREFIX)/bin
 # 	$(CC) $(CFLAGS) -c $< -o $@
 
 adhd: src/main.o src/window_state.o
-	$(CC) $(CFLAGS) src/main.o src/window_state.o -o $@ $(LDFLAGS)
+	$(CC) $(CFLAGS) src/main.o src/window_state.o -o $@ $(LDFLAGS) $(LDLIBS)
 
 src/main.o: src/main.c $(HEADERS)
 	$(CC) -c $(CFLAGS) src/main.c -o $@
