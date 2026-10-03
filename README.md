@@ -2,7 +2,7 @@
 
 We live in a noisy digital world. Unless you turn off your WiFi, millions of companies bid for your attention as you try to perform even the simplest of tasks.
 
-This tool is a free, open-source application to help you stay on track. You set an intention before you work, and an overlay will remind you of your intention every x minutes.
+This tool is a free, open-source application to help you stay on track. You set an intention before you work, and a big, fat overlay stays in your periphery to keep you on track.
 
 ![main window](demo/main_window.png)
 ![coding](demo/coding.png)
@@ -51,6 +51,6 @@ In a world of fancy todo managers, for anyone with adhd, doing one thing at a ti
 
 - **No sign in required**
 - **Slick overlay to show current intention**
-- **Lightweight** - Written in C with few dependencies, nothing bloated like electron
+- **Lightweight** - Written in C with few dependencies
 - **Privacy first** - No telemetry, works offline
-- **Session history** - Review your past wins and losses
+- **Daily history** - Keep track of which days you won or lost
