@@ -1,0 +1,32 @@
+CC = cc
+CFLAGS = -g -Wall -Iinclude
+SOURCES = src/main.c src/window_state.c
+OBJECTS = src/main.o src/window_state.o
+LDFLAGS = -lraylib -lm -lsqlite3
+HEADERS = \
+	include/raygui.h include/common.h include/window_state.h
+
+PREFIX ?= /usr/local
+BINDIR := $(PREFIX)/bin
+
+# adhd: $(OBJECTS)
+# 	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+# %.o: %.c $(HEADERS)
+# 	$(CC) $(CFLAGS) -c $< -o $@
+
+adhd: src/main.o src/window_state.o
+	$(CC) $(CFLAGS) src/main.o src/window_state.o -o $@ $(LDFLAGS)
+
+src/main.o: src/main.c $(HEADERS)
+	$(CC) -c $(CFLAGS) src/main.c -o $@
+
+src/window_state.o: src/window_state.c $(HEADERS)
+	$(CC) -c $(CFLAGS) src/window_state.c -o $@
+clean:
+	rm -rf $(OBJECTS) adhd
+
+.PHONY: install
+install: adhd
+	install -D adhd $(BINDIR)/adhd
+
