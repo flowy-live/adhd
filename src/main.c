@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
 
 #define RAYGUI_IMPLEMENTATION
 #include <raygui.h>
@@ -18,12 +19,23 @@
 void switch_mode(Mode mode) {
   set_mode(mode);
   
+  int monitor = GetCurrentMonitor();
   switch (mode) {
   case WINDOW:
     SetWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+    SetWindowState(FLAG_WINDOW_TRANSPARENT | FLAG_WINDOW_UNDECORATED);
+    SetWindowOpacity(1);
+
+    // cneter in screen
+    SetWindowPosition((GetMonitorWidth(monitor) / 2) - (WINDOW_WIDTH / 2), (GetMonitorHeight(monitor) / 2) - (WINDOW_HEIGHT / 2));
     break;
   case OVERLAY:
+    SetWindowOpacity(0.5);
     SetWindowSize(OVERLAY_WIDTH, OVERLAY_HEIGHT);
+    SetWindowState(FLAG_WINDOW_TRANSPARENT | FLAG_WINDOW_UNDECORATED | FLAG_WINDOW_TOPMOST);
+
+    // bottom right of screen
+    SetWindowPosition(GetMonitorWidth(monitor) - OVERLAY_WIDTH, GetMonitorHeight(monitor) - OVERLAY_HEIGHT);
     break;
   default:
     break;
@@ -108,11 +120,10 @@ void draw_graph(int x, int y) {
   GuiDisableTooltip();
 }
 
-bool edit_mode = false;
+bool edit_mode = true;
 
 void render_window() {
   ClearBackground(RAYWHITE);
-  DrawFPS(WINDOW_WIDTH - 50, 10);
 
   Rectangle text_box_rect = {(WINDOW_WIDTH / 2) - 200, (WINDOW_HEIGHT / 2) - 200, 400, 50};
   Vector2 mouse_pos = GetMousePosition();
@@ -138,9 +149,8 @@ void render_window() {
 
 void render_overlay() {
   ClearBackground(BLANK);
-  DrawFPS(OVERLAY_WIDTH - 50, 10);
 
-  const Rectangle button_rect = {OVERLAY_WIDTH - 100, 10, 100, 25};
+  const Rectangle button_rect = {OVERLAY_WIDTH - 100, OVERLAY_HEIGHT - 30, 100, 25};
   int active = 0;
 
   if (GuiToggleSlider(button_rect, "Toggle mode", &active)) {
@@ -150,6 +160,7 @@ void render_overlay() {
   GuiSetStyle(DEFAULT, TEXT_SIZE, 75);
   GuiSetStyle(DEFAULT, TEXT_WRAP_MODE, TEXT_WRAP_CHAR);
   GuiSetStyle(LABEL, TEXT_ALIGNMENT, TEXT_ALIGN_CENTER);
+  GuiSetStyle(LABEL, TEXT_COLOR_NORMAL, ColorToInt(GOLD));
   GuiLabel((Rectangle){0, 0, OVERLAY_WIDTH, OVERLAY_HEIGHT}, get_intention());
   GuiSetStyle(DEFAULT, TEXT_WRAP_MODE, 0);
 }
@@ -163,6 +174,7 @@ int main(int argc, char *argv[]) {
   
   printf("Welcome to Flowy.adhd\n");
 
+  SetConfigFlags(FLAG_WINDOW_TRANSPARENT | FLAG_WINDOW_UNDECORATED);
   InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Flowy.adhd");
  
   while (!WindowShouldClose()) {
