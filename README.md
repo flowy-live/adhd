@@ -9,7 +9,11 @@ This tool is a free, open-source application to help you stay on track. You set 
 ![research](demo/research.png)
 
 ## Install
-At the moment, you must build and install the application yourself. but you need raylib, sqlite3, and any C compiler.
+At the moment, you must build the application yourself.
+
+Dependencies:
+- raylib
+- sqlite3
 
 ### macOS
 ```sh
