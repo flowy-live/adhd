@@ -1,5 +1,5 @@
-#ifndef WINDOWSTATE_H
-#define WINDOWSTATE_H
+#ifndef STATE_H
+#define STATE_H
 
 #include "common.h"
 #include <stddef.h>
@@ -11,8 +11,8 @@ enum mode_t {
 };
 typedef enum mode_t Mode;
 
-void init_window_state();
-void cleanup_window_state();
+void init_state();
+void cleanup_state();
 
 void set_intention(char *intention);
 char *get_intention();

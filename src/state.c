@@ -1,4 +1,4 @@
-#include "window_state.h"
+#include "state.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -101,7 +101,7 @@ static void db_get_all_records() {
   assert(rc == SQLITE_OK);
 }
 
-void init_window_state() {
+void init_state() {
   s = malloc(sizeof(struct state));
   s->mode = WINDOW;
 
@@ -170,7 +170,7 @@ static void generate_key(struct tm *time, char *buffer, size_t buffer_size) {
   snprintf(buffer, buffer_size, "%d", time->tm_yday);
 }
 
-void cleanup_window_state() {
+void cleanup_state() {
   if (!s) {
     return;
   }

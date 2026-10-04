@@ -6,7 +6,7 @@
 #define RAYGUI_IMPLEMENTATION
 #include <raygui.h>
 #include <raylib.h>
-#include "window_state.h"
+#include "state.h"
 #include "common.h"
 
 #define WINDOW_HEIGHT 700
@@ -170,7 +170,7 @@ int main(int argc, char *argv[]) {
   localtime_r(&now, &local_time);
   mktime(&local_time);
   
-  init_window_state();
+  init_state();
   
   printf("Welcome to Flowy.adhd\n");
 
@@ -189,6 +189,8 @@ int main(int argc, char *argv[]) {
   }
 
   CloseWindow();
+
+  cleanup_state();
 
   return 0;
 }
